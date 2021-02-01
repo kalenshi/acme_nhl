@@ -20,6 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'a2%1$y9tg8@l#14tuq=s-h^!95mcn&*0!m8w*43p4r&@vk=l58'
+NFL_API_KEY = "74db8efa2a6db279393b433d97c2bc843f8e32b0"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -74,17 +75,17 @@ WSGI_APPLICATION = 'ACME.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": "redis://127.0.0.1:6379/1",
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#         }
-#     }
-# }
-#
-# CACHE_TTL = 0  # 60 * 60 * 24  # The data will be alive for 24 hours
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+CACHE_TTL = 0  # 60 * 60 * 24  # The data will be alive for 24 hours
 
 DATABASES = {
     'default': {

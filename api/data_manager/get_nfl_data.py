@@ -1,21 +1,20 @@
 import requests
 import json
 import datetime
+from django.conf import settings
 import pandas as pd
 from decimal import Decimal
 
-score_board_url = "https://delivery.chalk247.com/" \
-                  "scoreboard/NFL/2020-01-13/" \
-                  "2020-01-19.json?api_key" \
-                  "=74db8efa2a6db279393b433d97c2bc843f8e32b0"
-rankings_url = "https://delivery.chalk247.com/team_rankings" \
-               "/NFL.json?api_key=74db8efa2a6db279393b433d97c2bc843f8e32b0"
+base_url = "https://delivery.chalk247.com"
 
 
-def api_call(date_range=None):
+def api_call(start_date, end_date):
     try:
-        scores_data = requests.get(score_board_url).json()['results']
-        rankings_data = requests.get(rankings_url).json()['results']['data']
+        score_url = f"{base_url}/scoreboard/NFL/{start_date}/{end_date}.json?api_key={settings.NFL_API_KEY}"
+        events_url = f"{base_url}/team_rankings/NFL.json?api_key={settings.NFL_API_KEY}"
+
+        scores_data = requests.get(url=score_url).json()['results']
+        rankings_data = requests.get(url=events_url).json()['results']['data']
         scoreboard_results = {event_key: scores_data[score]['data'][event_key]
                               for score in scores_data.keys() if len(scores_data[score]) > 0
                               for event_key in scores_data[score]['data'].keys()}
@@ -47,4 +46,4 @@ def api_call(date_range=None):
                     break
         return new_score_data_json
     except Exception as e:
-        return {"Error: ", e}
+        return ValueError(str(e))
