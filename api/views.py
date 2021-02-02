@@ -9,10 +9,6 @@ from . import serializers
 
 class AcmeView(views.APIView):
     serializer_class = serializers.InputSerializer
-
-    def get(self, request):
-        return Response({"req_data"}, status=status.HTTP_200_OK)
-
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         try:
